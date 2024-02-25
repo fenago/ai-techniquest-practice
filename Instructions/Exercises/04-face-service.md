@@ -8,16 +8,16 @@ lab:
 
 The ability to detect and analyze human faces is a core AI capability. In this exercise, you'll explore two Azure AI Services that you can use to work with faces in images: the **Azure AI Vision** service, and the **Face** service.
 
-> **Note**: From June 21st 2022, capabilities of Azure AI services that return personally identifiable information are restricted to customers who have been granted [limited access](https://docs.microsoft.com/azure/cognitive-services/cognitive-services-limited-access). Additionally, capabilities that infer emotional state are no longer available. These restrictions may affect this lab exercise. We're working to address this, but in the meantime you may experience some errors when following the steps below; for which we apologize. For more details about the changes Microsoft has made, and why - see [Responsible AI investments and safeguards for facial recognition](https://azure.microsoft.com/blog/responsible-ai-investments-and-safeguards-for-facial-recognition/).
+> **Note**: From June 21st 2022, capabilities of Azure AI services that return personally identifiable information are restricted to customers who have been granted limited access. Additionally, capabilities that infer emotional state are no longer available. These restrictions may affect this lab exercise. We're working to address this, but in the meantime you may experience some errors when following the steps below; for which we apologize.
 
 ## Clone the repository for this course
 
 If you have not already done so, you must clone the code repository for this course:
 
 1. Start Visual Studio Code.
-2. Open the palette (SHIFT+CTRL+P) and run a **Git: Clone** command to clone the `https://github.com/MicrosoftLearning/mslearn-ai-vision` repository to a local folder (it doesn't matter which folder).
+2. Open the palette (SHIFT+CTRL+P) and run a **Git: Clone** command to clone the `https://github.com/fenago/ai-techniquest-practice` repository to a local folder (it doesn't matter which folder).
 3. When the repository has been cloned, open the folder in Visual Studio Code.
-4. Wait while additional files are installed to support the C# code projects in the repo.
+4. Wait while additional files are installed.
 
     > **Note**: If you are prompted to add required assets to build and debug, select **Not Now**.
 
@@ -40,16 +40,11 @@ If you don't already have one in your subscription, you'll need to provision an 
 
 In this exercise, you'll complete a partially implemented client application that uses the Azure AI Vision SDK to analyze faces in an image.
 
-> **Note**: You can choose to use the SDK for either **C#** or **Python**. In the steps below, perform the actions appropriate for your preferred language.
+> **Note**: You can use the SDK for **Python**. In the steps below, perform the actions appropriate for your preferred language.
 
-1. In Visual Studio Code, in the **Explorer** pane, browse to the **04-face** folder and expand the **C-Sharp** or **Python** folder depending on your language preference.
+1. In Visual Studio Code, in the **Explorer** pane, browse to the **04-face** folder and expand the **Python** folder.
 2. Right-click the **computer-vision** folder and open an integrated terminal. Then install the Azure AI Vision SDK package by running the appropriate command for your language preference:
 
-    **C#**
-
-    ```
-    dotnet add package Azure.AI.Vision.ImageAnalysis -v 0.15.1-beta.1
-    ```
 
     **Python**
 
@@ -58,25 +53,17 @@ In this exercise, you'll complete a partially implemented client application tha
     ```
     
 3. View the contents of the **computer-vision** folder, and note that it contains a file for configuration settings:
-    - **C#**: appsettings.json
+
     - **Python**: .env
 
 4. Open the configuration file and update the configuration values it contains to reflect the **endpoint** and an authentication **key** for your Azure AI services resource. Save your changes.
 
 5. Note that the **computer-vision** folder contains a code file for the client application:
 
-    - **C#**: Program.cs
     - **Python**: detect-people.py
 
 6. Open the code file and at the top, under the existing namespace references, find the comment **Import namespaces**. Then, under this comment, add the following language-specific code to import the namespaces you will need to use the Azure AI Vision SDK:
 
-    **C#**
-
-    ```C#
-    // import namespaces
-    using Azure.AI.Vision.Common;
-    using Azure.AI.Vision.ImageAnalysis;
-    ```
 
     **Python**
 
@@ -98,14 +85,6 @@ Now you're ready to use the SDK to call the Vision service and detect faces in a
 
 1. In the code file for your client application (**Program.cs** or **detect-people.py**), in the **Main** function, note that the code to load the configuration settings has been provided. Then find the comment **Authenticate Azure AI Vision client**. Then, under this comment, add the following language-specific code to create and authenticate a Azure AI Vision client object:
 
-    **C#**
-
-    ```C#
-    // Authenticate Azure AI Vision client
-    var cvClient = new VisionServiceOptions(
-        aiSvcEndpoint,
-        new AzureKeyCredential(aiSvcKey));
-    ```
 
     **Python**
 
@@ -117,14 +96,6 @@ Now you're ready to use the SDK to call the Vision service and detect faces in a
 2. In the **Main** function, under the code you just added, note that the code specifies the path to an image file and then passes the image path to a function named **AnalyzeImage**. This function is not yet fully implemented.
 
 3. In the **AnalyzeImage** function, under the comment **Specify features to be retrieved (PEOPLE)**, add the following code:
-
-    **C#**
-
-    ```C#
-    // Specify features to be retrieved (PEOPLE)
-    Features =
-        ImageAnalysisFeature.People
-    ```
 
     **Python**
 
@@ -139,61 +110,6 @@ Now you're ready to use the SDK to call the Vision service and detect faces in a
 
 4. In the **AnalyzeImage** function, under the comment **Get image analysis**, add the following code:
 
-    **C#**
-
-    ```C
-    // Get image analysis
-    using var imageSource = VisionSource.FromFile(imageFile);
-    
-    using var analyzer = new ImageAnalyzer(serviceOptions, imageSource, analysisOptions);
-    
-    var result = analyzer.Analyze();
-    
-    if (result.Reason == ImageAnalysisResultReason.Analyzed)
-    {
-        // Get people in the image
-        if (result.People != null)
-        {
-            Console.WriteLine($" People:");
-        
-            // Prepare image for drawing
-            System.Drawing.Image image = System.Drawing.Image.FromFile(imageFile);
-            Graphics graphics = Graphics.FromImage(image);
-            Pen pen = new Pen(Color.Cyan, 3);
-            Font font = new Font("Arial", 16);
-            SolidBrush brush = new SolidBrush(Color.WhiteSmoke);
-        
-            foreach (var person in result.People)
-            {
-                // Draw object bounding box if confidence > 50%
-                if (person.Confidence > 0.5)
-                {
-                    // Draw object bounding box
-                    var r = person.BoundingBox;
-                    Rectangle rect = new Rectangle(r.X, r.Y, r.Width, r.Height);
-                    graphics.DrawRectangle(pen, rect);
-        
-                    // Return the confidence of the person detected
-                    Console.WriteLine($"   Bounding box {person.BoundingBox}, Confidence {person.Confidence:0.0000}");
-                }
-            }
-        
-            // Save annotated image
-            String output_file = "detected_people.jpg";
-            image.Save(output_file);
-            Console.WriteLine("  Results saved in " + output_file + "\n");
-        }
-    }
-    else
-    {
-        var errorDetails = ImageAnalysisErrorDetails.FromResult(result);
-        Console.WriteLine(" Analysis failed.");
-        Console.WriteLine($"   Error reason : {errorDetails.Reason}");
-        Console.WriteLine($"   Error code : {errorDetails.ErrorCode}");
-        Console.WriteLine($"   Error message: {errorDetails.Message}\n");
-    }
-    
-    ```
 
     **Python**
     
@@ -245,12 +161,6 @@ Now you're ready to use the SDK to call the Vision service and detect faces in a
 
 5. Save your changes and return to the integrated terminal for the **computer-vision** folder, and enter the following command to run the program:
 
-    **C#**
-
-    ```
-    dotnet run
-    ```
-
     **Python**
 
     ```
@@ -264,14 +174,9 @@ Now you're ready to use the SDK to call the Vision service and detect faces in a
 
 While the **Azure AI Vision** service offers basic face detection (along with many other image analysis capabilities), the **Face** service provides more comprehensive functionality for facial analysis and recognition.
 
-1. In Visual Studio Code, in the **Explorer** pane, browse to the **04-face** folder and expand the **C-Sharp** or **Python** folder depending on your language preference.
+1. In Visual Studio Code, in the **Explorer** pane, browse to the **04-face** folder and expand the **Python** folder.
 2. Right-click the **face-api** folder and open an integrated terminal. Then install the Face SDK package by running the appropriate command for your language preference:
 
-    **C#**
-
-    ```
-    dotnet add package Microsoft.Azure.CognitiveServices.Vision.Face --version 2.8.0-preview.3
-    ```
 
     **Python**
 
@@ -280,25 +185,17 @@ While the **Azure AI Vision** service offers basic face detection (along with ma
     ```
     
 3. View the contents of the **face-api** folder, and note that it contains a file for configuration settings:
-    - **C#**: appsettings.json
+
     - **Python**: .env
 
 4. Open the configuration file and update the configuration values it contains to reflect the **endpoint** and an authentication **key** for your Azure AI services resource. Save your changes.
 
 5. Note that the **face-api** folder contains a code file for the client application:
 
-    - **C#**: Program.cs
     - **Python**: analyze-faces.py
 
 6. Open the code file and at the top, under the existing namespace references, find the comment **Import namespaces**. Then, under this comment, add the following language-specific code to import the namespaces you will need to use the Vision SDK:
 
-    **C#**
-
-    ```C#
-    // Import namespaces
-    using Microsoft.Azure.CognitiveServices.Vision.Face;
-    using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
-    ```
 
     **Python**
 
@@ -311,16 +208,6 @@ While the **Azure AI Vision** service offers basic face detection (along with ma
 
 7. In the **Main** function, note that the code to load the configuration settings has been provided. Then find the comment **Authenticate Face client**. Then, under this comment, add the following language-specific code to create and authenticate a **FaceClient** object:
 
-    **C#**
-
-    ```C#
-    // Authenticate Face client
-    ApiKeyServiceClientCredentials credentials = new ApiKeyServiceClientCredentials(cogSvcKey);
-    faceClient = new FaceClient(credentials)
-    {
-        Endpoint = cogSvcEndpoint
-    };
-    ```
 
     **Python**
 
@@ -339,17 +226,6 @@ One of the most fundamental capabilities of the Face service is to detect faces 
 1. In the code file for your application, in the **Main** function, examine the code that runs if the user selects menu option **1**. This code calls the **DetectFaces** function, passing the path to an image file.
 2. Find the **DetectFaces** function in the code file, and under the comment **Specify facial features to be retrieved**, add the following code:
 
-    **C#**
-
-    ```C#
-    // Specify facial features to be retrieved
-    IList<FaceAttributeType> features = new FaceAttributeType[]
-    {
-        FaceAttributeType.Occlusion,
-        FaceAttributeType.Blur,
-        FaceAttributeType.Glasses
-    };
-    ```
 
     **Python**
 
@@ -362,53 +238,6 @@ One of the most fundamental capabilities of the Face service is to detect faces 
 
 3. In the **DetectFaces** function, under the code you just added, find the comment **Get faces** and add the following code:
 
-**C#**
-
-```C
-// Get faces
-using (var imageData = File.OpenRead(imageFile))
-{    
-    var detected_faces = await faceClient.Face.DetectWithStreamAsync(imageData, returnFaceAttributes: features, returnFaceId: false);
-
-    if (detected_faces.Count() > 0)
-    {
-        Console.WriteLine($"{detected_faces.Count()} faces detected.");
-
-        // Prepare image for drawing
-        Image image = Image.FromFile(imageFile);
-        Graphics graphics = Graphics.FromImage(image);
-        Pen pen = new Pen(Color.LightGreen, 3);
-        Font font = new Font("Arial", 4);
-        SolidBrush brush = new SolidBrush(Color.White);
-        int faceCount=0;
-
-        // Draw and annotate each face
-        foreach (var face in detected_faces)
-        {
-            faceCount++;
-            Console.WriteLine($"\nFace number {faceCount}");
-            
-            // Get face properties
-            Console.WriteLine($" - Mouth Occluded: {face.FaceAttributes.Occlusion.MouthOccluded}");
-            Console.WriteLine($" - Eye Occluded: {face.FaceAttributes.Occlusion.EyeOccluded}");
-            Console.WriteLine($" - Blur: {face.FaceAttributes.Blur.BlurLevel}");
-            Console.WriteLine($" - Glasses: {face.FaceAttributes.Glasses}");
-
-            // Draw and annotate face
-            var r = face.FaceRectangle;
-            Rectangle rect = new Rectangle(r.Left, r.Top, r.Width, r.Height);
-            graphics.DrawRectangle(pen, rect);
-            string annotation = $"Face number {faceCount}";
-            graphics.DrawString(annotation,font,brush,r.Left, r.Top);
-        }
-
-        // Save annotated image
-        String output_file = "detected_faces.jpg";
-        image.Save(output_file);
-        Console.WriteLine(" Results saved in " + output_file);   
-    }
-}
-```
 
 **Python**
 
@@ -469,13 +298,6 @@ with open(image_file, mode="rb") as image_data:
 4. Examine the code you added to the **DetectFaces** function. It analyzes an image file and detects any faces it contains, including attributes for occlusion, blur, and the presence of spectacles. The details of each face are displayed, including a unique face identifier that is assigned to each face; and the location of the faces is indicated on the image using a bounding box.
 5. Save your changes and return to the integrated terminal for the **face-api** folder, and enter the following command to run the program:
 
-    **C#**
-
-    ```
-    dotnet run
-    ```
-
-    *The C# output may display warnings about asynchronous functions now using the **await** operator. You can ignore these.*
 
     **Python**
 
@@ -486,10 +308,3 @@ with open(image_file, mode="rb") as image_data:
 6. When prompted, enter **1** and observe the output, which should include the ID and attributes of each face detected.
 7. View the **detected_faces.jpg** file that is generated in the same folder as your code file to see the annotated faces.
 
-## More information
-
-There are several additional features available within the **Face** service, but following the [Responsible AI Standard](https://aka.ms/aah91ff) those are restricted behind a Limited Access policy. These features include identifying, verifying, and creating facial recognition models. To learn more and apply for access, see the [Limited Access for Azure AI Services](https://docs.microsoft.com/en-us/azure/cognitive-services/cognitive-services-limited-access).
-
-For more information about using the **Azure AI Vision** service for face detection, see the [Azure AI Vision documentation](https://docs.microsoft.com/azure/cognitive-services/computer-vision/concept-detecting-faces).
-
-To learn more about the **Face** service, see the [Face documentation](https://docs.microsoft.com/azure/cognitive-services/face/).

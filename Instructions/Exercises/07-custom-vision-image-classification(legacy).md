@@ -15,9 +15,9 @@ In this exercise, you will use the Custom Vision service to train an image class
 If you have not already cloned **mslearn-ai-vision** code repository to the environment where you're working on this lab, follow these steps to do so. Otherwise, open the cloned folder in Visual Studio Code.
 
 1. Start Visual Studio Code.
-2. Open the palette (SHIFT+CTRL+P) and run a **Git: Clone** command to clone the `https://github.com/MicrosoftLearning/mslearn-ai-vision` repository to a local folder (it doesn't matter which folder).
+2. Open the palette (SHIFT+CTRL+P) and run a **Git: Clone** command to clone the `https://github.com/fenago/ai-techniquest-practice` repository to a local folder (it doesn't matter which folder).
 3. When the repository has been cloned, open the folder in Visual Studio Code.
-4. Wait while additional files are installed to support the C# code projects in the repo.
+4. Wait while additional files are installed.
 
     > **Note**: If you are prompted to add required assets to build and debug, select **Not Now**. If you are prompted with the Message *Detected an Azure Function Project in folder*, you can safely close that message.
 
@@ -94,16 +94,11 @@ The project you have created has been assigned a unique identifier, which you wi
 
 The Custom Vision portal provides a convenient user interface that you can use to upload and tag images, and train models. However, in some scenarios you may want to automate model training by using the Custom Vision training API.
 
-> **Note**: In this exercise, you can choose to use the API from either the **C#** or **Python** SDK. In the steps below, perform the actions appropriate for your preferred language.
+> **Note**: In this exercise, you can use the API from **Python** SDK. In the steps below, perform the actions appropriate for your preferred language.
 
-1. In Visual Studio Code, in the **Explorer** pane, browse to the **07-custom-vision-image-classification** folder and expand the **C-Sharp** or **Python** folder depending on your language preference.
+1. In Visual Studio Code, in the **Explorer** pane, browse to the **07-custom-vision-image-classification** folder and expand the **Python** folder.
 2. Right-click the **train-classifier** folder and open an integrated terminal. Then install the Custom Vision Training package by running the appropriate command for your language preference:
 
-**C#**
-
-```
-dotnet add package Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training --version 2.0.0
-```
 
 **Python**
 
@@ -112,13 +107,12 @@ pip install azure-cognitiveservices-vision-customvision==3.1.0
 ```
 
 3. View the contents of the **train-classifier** folder, and note that it contains a file for configuration settings:
-    - **C#**: appsettings.json
+
     - **Python**: .env
 
     Open the configuration file and update the configuration values it contains to reflect the endpoint and key for your Custom Vision *training* resource, and the project ID for the classification project you created previously. Save your changes.
 4. Note that the **train-classifier** folder contains a code file for the client application:
 
-    - **C#**: Program.cs
     - **Python**: train-classifier.py
 
     Open the code file and review the code it contains, noting the following details:
@@ -128,11 +122,7 @@ pip install azure-cognitiveservices-vision-customvision==3.1.0
     - The **Train_Model** function creates a new training iteration for the project and waits for training to complete.
 5. Return the integrated terminal for the **train-classifier** folder, and enter the following command to run the program:
 
-**C#**
 
-```
-dotnet run
-```
 
 **Python**
 
@@ -155,15 +145,10 @@ Now you're ready to publish your trained model so that it can be used from a cli
 
 ## Use the image classifier from a client application
 
-Now that you've published the image classification model, you can use it from a client application. Once again, you can choose to use **C#** or **Python**.
+Now that you've published the image classification model, you can use it from a client application. Once again, you can use **Python**.
 
 1. In Visual Studio Code, in the **07-custom-vision-image-classification** folder, in the subfolder for your preferred language (**C-Sharp** or **Python**), right- the **test-classifier** folder and open an integrated terminal. Then enter the following SDK-specific command to install the Custom Vision Prediction package:
 
-**C#**
-
-```
-dotnet add package Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction --version 2.0.0
-```
 
 **Python**
 
@@ -174,18 +159,14 @@ pip install azure-cognitiveservices-vision-customvision==3.1.0
 > **Note**: The Python SDK package includes both training and prediction packages, and may already be installed.
 
 2. Expand the **test-classifier** folder to view the files it contains, which are used to implement a test client application for your image classification model.
-3. Open the configuration file for your client application (*appsettings.json* for C# or *.env* for Python) and update the configuration values it contains to reflect the endpoint and key for your Custom Vision *prediction* resource, the project ID for the classification project, and the name of your published model (which should be *fruit-classifier*). Save your changes.
-4. Open the code file for your client application (*Program.cs* for C#, *test-classification.py* for Python) and review the code it contains, noting the following details:
+3. Open the configuration file for your client application (*.env* for Python) and update the configuration values it contains to reflect the endpoint and key for your Custom Vision *prediction* resource, the project ID for the classification project, and the name of your published model (which should be *fruit-classifier*). Save your changes.
+4. Open the code file for your client application (*test-classification.py* for Python) and review the code it contains, noting the following details:
     - Namespaces from the package you installed are imported
     - The **Main** function retrieves the configuration settings, and uses the key and endpoint to create an authenticated **CustomVisionPredictionClient**.
     - The prediction client object is used to predict a class for each image in the **test-images** folder, specifying the project ID and model name for each request. Each prediction includes a probability for each possible class, and only predicted tags with a probability greater than 50% are displayed.
 5. Return the integrated terminal for the **test-classifier** folder, and enter the following SDK-specific command to run the program:
 
-**C#**
 
-```
-dotnet run
-```
 
 **Python**
 
@@ -194,7 +175,3 @@ python test-classifier.py
 ```
 
 6. View the label (tag) and probability scores for each prediction. You can view the images in the **test-images** folder to verify that the model has classified them correctly.
-
-## More information
-
-For more information about image classification with the Custom Vision service, see the [Custom Vision documentation](https://docs.microsoft.com/azure/cognitive-services/custom-vision-service/).
