@@ -51,6 +51,8 @@ In this exercise, you'll complete a partially implemented client application tha
     
     ```
     pip install azure-ai-vision-imageanalysis==1.0.0b1
+
+    pip install python-dotenv pillow matplotlib
     ```
     
 3. View the contents of the **image-analysis** folder, and note that it contains a file for configuration settings:
@@ -85,7 +87,7 @@ In this exercise, you will use the Azure AI Vision service to analyze multiple i
 
 Now you're ready to use the SDK to call the Vision service and analyze an image.
 
-1. In the code file for your client application (**Program.cs** or **image-analysis.py**), in the **Main** function, note that the code to load the configuration settings has been provided. Then find the comment **Authenticate Azure AI Vision client**. Then, under this comment, add the following language-specific code to create and authenticate a Azure AI Vision client object:
+1. In the code file for your client application (**image-analysis.py**), in the **Main** function, note that the code to load the configuration settings has been provided. Then find the comment **Authenticate Azure AI Vision client**. Then, under this comment, add the following language-specific code to create and authenticate a Azure AI Vision client object:
 
 
 **Python**

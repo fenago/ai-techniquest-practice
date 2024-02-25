@@ -83,7 +83,7 @@ In this exercise, you will use the Azure AI Vision service to analyze an image o
 
 Now you're ready to use the SDK to call the Vision service and detect faces in an image.
 
-1. In the code file for your client application (**Program.cs** or **detect-people.py**), in the **Main** function, note that the code to load the configuration settings has been provided. Then find the comment **Authenticate Azure AI Vision client**. Then, under this comment, add the following language-specific code to create and authenticate a Azure AI Vision client object:
+1. In the code file for your client application (**detect-people.py**), in the **Main** function, note that the code to load the configuration settings has been provided. Then find the comment **Authenticate Azure AI Vision client**. Then, under this comment, add the following language-specific code to create and authenticate a Azure AI Vision client object:
 
 
     **Python**
