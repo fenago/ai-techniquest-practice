@@ -88,6 +88,8 @@ Next, you will create a new training project for custom image classification in 
 
     ![](https://raw.githubusercontent.com/fenago/ai-techniquest-practice/main/Instructions/media/9.png)
 
+    ![](https://raw.githubusercontent.com/fenago/ai-techniquest-practice/main/Instructions/media/10.png)
+
     - **Dataset name**: training_images
     - **Model type**: Image classification
     - **Select Azure blob storage container**: Select **Select Container**
@@ -102,11 +104,16 @@ At this point in project creation, you would usually select **Create Azure ML Da
 1. Select **Add COCO file**
 1. In the dropdown, select **Import COCO file from a Blob Container**
 1. Since you have already connected your container named `fruit`, Vision Studio searches that for a COCO file. Select **training_labels.json** from the dropdown, and add the COCO file.
+
+    ![](https://raw.githubusercontent.com/fenago/ai-techniquest-practice/main/Instructions/media/11.png)
+
 1. Navigate to **Custom models** on the left, and select **Train a new model**. Use the following settings:
     - **Name of model**: classifyfruit
     - **Model type**: Image classification
     - **Choose training dataset**: training_images
     - Leave the rest as default, and select **Train model**
+
+    ![](https://raw.githubusercontent.com/fenago/ai-techniquest-practice/main/Instructions/media/12.png)
 
 Training can take some time - default budget is up to an hour, however for this small dataset it is usually much quicker than that. Select the **Refresh** button every couple minutes until the status of the job is *Succeeded*. Select the model.
 
