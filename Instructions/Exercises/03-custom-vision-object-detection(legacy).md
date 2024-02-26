@@ -13,7 +13,7 @@ In this exercise, you will use the Custom Vision service to train an *object det
 If you have already cloned code repository to the environment where you're working on this lab, open it in Visual Studio Code; otherwise, follow these steps to clone it now.
 
 1. Start Visual Studio Code.
-2. Open the palette (SHIFT+CTRL+P) and run a **Git: Clone** command to clone the `https://github.com/fenago/ai-techniquest-practice` repository to a local folder (it doesn't matter which folder).
+2. Open Git Bash and run  the following command to clone the `git clone https://github.com/fenago/ai-techniquest-practice` repository to a local folder (it doesn't matter which folder).
 3. When the repository has been cloned, open the folder in Visual Studio Code.
 4. Wait while additional files are installed.
 

@@ -13,7 +13,10 @@ Azure AI Vision is an artificial intelligence capability that enables software s
 If you have not already cloned the **Azure AI Vision** code repository to the environment where you're working on this lab, follow these steps to do so. Otherwise, open the cloned folder in Visual Studio Code.
 
 1. Start Visual Studio Code.
-2. Open the palette (SHIFT+CTRL+P) and run a **Git: Clone** command to clone the `https://github.com/fenago/ai-techniquest-practice` repository to a local folder (it doesn't matter which folder).
+2. Open Git Bash and run  the following command to clone the `git clone https://github.com/fenago/ai-techniquest-practice` repository to a local folder (it doesn't matter which folder).
+
+    ![](https://raw.githubusercontent.com/fenago/ai-techniquest-practice/main/Instructions/media/1.png)
+
 3. When the repository has been cloned, open the folder in Visual Studio Code.
 4. Wait while additional files are installed.
 
@@ -32,6 +35,9 @@ If you don't already have one in your subscription, you'll need to provision an 
     - **Pricing tier**: Standard S0
 
     \*Azure AI Vision 4.0 features are currently only available in these regions.
+
+
+    ![](https://raw.githubusercontent.com/fenago/ai-techniquest-practice/main/Instructions/media/2.png)
 
 3. Select the required checkboxes and create the resource.
 4. Wait for deployment to complete, and then view the deployment details.

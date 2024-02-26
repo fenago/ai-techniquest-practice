@@ -15,7 +15,7 @@ The ability to detect and analyze human faces is a core AI capability. In this e
 If you have not already done so, you must clone the code repository for this course:
 
 1. Start Visual Studio Code.
-2. Open the palette (SHIFT+CTRL+P) and run a **Git: Clone** command to clone the `https://github.com/fenago/ai-techniquest-practice` repository to a local folder (it doesn't matter which folder).
+2. Open Git Bash and run  the following command to clone the `git clone https://github.com/fenago/ai-techniquest-practice` repository to a local folder (it doesn't matter which folder).
 3. When the repository has been cloned, open the folder in Visual Studio Code.
 4. Wait while additional files are installed.
 
