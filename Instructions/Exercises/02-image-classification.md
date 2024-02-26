@@ -46,6 +46,9 @@ We also need a storage account to store the training images.
     - **Region**: *Choose the same region you used for your Azure AI Service resource*
     - **Performance**: Standard
     - **Redundancy**: Locally-redundant storage (LRS)
+
+    ![](https://raw.githubusercontent.com/fenago/ai-techniquest-practice/main/Instructions/media/4.png)
+
 1. While your storage account is being created, go to Visual studio code, and expand the **Labfiles/02-image-classification** folder.
 1. In that folder, select **replace.ps1** and review the code. You'll see that it replaces the name of your storage account for the placeholder in a JSON file (the COCO file) we use in a later step. Replace the placeholder *in the first line only* of the file with the name of your storage account. Save the file.
 1. Right-click on the **02-image-classification** folder and open an Integrated Terminal. Run the following command.
@@ -54,13 +57,21 @@ We also need a storage account to store the training images.
     ./replace.ps1
     ```
 
+    ![](https://raw.githubusercontent.com/fenago/ai-techniquest-practice/main/Instructions/media/5.png)
+
 1. You can review the COCO file to ensure your storage account name is there. Select **training-images/training_labels.json** and view the first few entries. In the *absolute_url* field, you should see something similar to *"https://myStorage.blob.core.windows.net/fruit/...*. If you don't see the change expected, make sure you updated only the first placeholder in the PowerShell script.
 1. Close both the JSON and PowerShell file, and go back to your browser window.
 1. Your storage account should be complete. Go to your storage account.
 1. Enable public access on the storage account. In the left pane, navigate to **Configuration** in the **Settings** group, and enable *Allow Blob anonymous access*. Select **Save**
+
+    ![](https://raw.githubusercontent.com/fenago/ai-techniquest-practice/main/Instructions/media/6.png)
+
+
 1. In the left pane, select **Containers** and create a new container named `fruit`, and set **Anonymous access level** to *Container (anonymous read access for containers and blobs)*.
 
     > **Note**: If the **Anonymous access level** is disabled, refresh the browser page.
+
+    ![](https://raw.githubusercontent.com/fenago/ai-techniquest-practice/main/Instructions/media/7.png)
 
 1. Navigate to `fruit`, and upload the images (and the one JSON file) in **Labfiles/02-image-classification/training-images** to that container.
 
@@ -70,7 +81,13 @@ Next, you will create a new training project for custom image classification in 
 
 1. In the web browser, navigate to `https://portal.vision.cognitive.azure.com/` and sign in with the Microsoft account where you created your Azure AI resource.
 1. Select the **Customize models with images** tile (can be found in the **Image analysis** tab if it isn't showing in your default view), and if prompted select the Azure AI resource you created.
+
+    ![](https://raw.githubusercontent.com/fenago/ai-techniquest-practice/main/Instructions/media/8.png)
+
 1. In your project, select **Add new dataset** on the top. Configure with the following settings:
+
+    ![](https://raw.githubusercontent.com/fenago/ai-techniquest-practice/main/Instructions/media/9.png)
+
     - **Dataset name**: training_images
     - **Model type**: Image classification
     - **Select Azure blob storage container**: Select **Select Container**

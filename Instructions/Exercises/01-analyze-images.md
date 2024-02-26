@@ -39,6 +39,9 @@ If you don't already have one in your subscription, you'll need to provision an 
 
     ![](https://raw.githubusercontent.com/fenago/ai-techniquest-practice/main/Instructions/media/2.png)
 
+    
+    ![](https://raw.githubusercontent.com/fenago/ai-techniquest-practice/main/Instructions/media/3.png)
+
 3. Select the required checkboxes and create the resource.
 4. Wait for deployment to complete, and then view the deployment details.
 5. When the resource has been deployed, go to it and view its **Keys and Endpoint** page. You will need the endpoint and one of the keys from this page in the next procedure.
